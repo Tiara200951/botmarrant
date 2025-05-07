@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BotMarrant 👽</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1c1c1c;
+      color: #fff;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #00ffcc;
+    }
+    #chat {
+      background: #2a2a2a;
+      padding: 15px;
+      border-radius: 10px;
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+    .message {
+      margin: 10px 0;
+    }
+    .bot { color: #00ffcc; }
+    .user { color: #ffcc00; }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      border: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>🤖 BotMarrant</h1>
+  <div id="chat"></div>
+  <input type="text" id="userInput" placeholder="Écris quelque chose..." />
+  <script>
+    const responses = {
+      ecole: Array.from({length: 20}, (_, i) => `L'école intergalactique #${i+1} ? Je l’ai quittée après 3 minutes.`),
+      manger: Array.from({length: 20}, (_, i) => `Mon plat préféré #${i+1} ? Des astéroïdes caramélisés avec du slime radioactif.`),
+      sport: Array.from({length: 20}, (_, i) => `J’ai gagné le championnat de lancer de comètes #${i+1} fois.`),
+      humains: Array.from({length: 20}, (_, i) => `Les humains #${i+1} ? Toujours à courir après des trucs inutiles.`),
+      look: Array.from({length: 20}, (_, i) => `Mon style #${i+1} : combinaison spatiale en velours atomique.`),
+      technologie: Array.from({length: 20}, (_, i) => `Mon ordi #${i+1} pense plus vite que votre espèce entière.`),
+      reseaux: Array.from({length: 20}, (_, i) => `Sur InstaCosmos #${i+1}, j’ai posté une photo de mon neurone préféré.`),
+      devoirs: Array.from({length: 20}, (_, i) => `Mes devoirs ? Je les confie à mon robot domestique modèle #${i+1}.`),
+      animaux: Array.from({length: 20}, (_, i) => `Mon animal de compagnie #${i+1} ? Un blob arc-en-ciel qui fait des blagues nulles.`),
+      famille: Array.from({length: 20}, (_, i) => `Mon cousin #${i+1} est un satellite intelligent. On discute par ondes quantiques.`)
+    };
+
+    const chat = document.getElementById("chat");
+    const input = document.getElementById("userInput");
+
+    input.addEventListener("keypress", function (e) {
+      if (e.key === "Enter") {
+        const text = input.value.trim();
+        if (!text) return;
+        addMessage("Toi", text);
+        respond(text.toLowerCase());
+        input.value = "";
+      }
+    });
+
+    function addMessage(sender, text) {
+      const div = document.createElement("div");
+      div.className = "message " + (sender === "BotMarrant" ? "bot" : "user");
+      div.innerHTML = `<strong>${sender} :</strong> ${text}`;
+      chat.appendChild(div);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function respond(text) {
+      let response = "Hmm... tu parles quelle langue là ? 🤔";
+      for (const theme in responses) {
+        if (text.includes(theme)) {
+          const all = responses[theme];
+          response = all[Math.floor(Math.random() * all.length)];
+          break;
+        }
+      }
+      addMessage("BotMarrant", response);
+    }
+  </script>
+</body>
+</html>
